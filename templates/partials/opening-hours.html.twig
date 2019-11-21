@@ -1,0 +1,120 @@
+{% if grav.language.getActive == 'en' %}
+    {% set currentTime = 'now'|date('h:i A') %}
+{% else %}
+    {% set currentTime = 'now'|date('H:i') %}
+    {% set time = "PLUGIN_OPENING_HOURS.GENERAL.TIME"|t %}
+{% endif %}
+
+
+{% set opened %}
+    <span class="oh-current--opened">{{ "PLUGIN_OPENING_HOURS.GENERAL.OPENED"|t }},</span>
+{% endset %}
+{% set closed %}
+    <span class="oh-current--closed">{{ "PLUGIN_OPENING_HOURS.GENERAL.CLOSED"|t }},</span>
+{% endset %}
+
+
+{% set openAt = "PLUGIN_OPENING_HOURS.GENERAL.OPENS_AT"|t  %}
+{% set openIn = "PLUGIN_OPENING_HOURS.GENERAL.OPENS_IN"|t  %}
+{% set closesAt = "PLUGIN_OPENING_HOURS.GENERAL.CLOSES_AT"|t %}
+{% set closesIn = "PLUGIN_OPENING_HOURS.GENERAL.CLOSES_IN"|t %}
+{% set minutes = "PLUGIN_OPENING_HOURS.GENERAL.MINUTES"|t %}
+
+{# ======================================================== #}
+<div class="oh-wrapper">
+    <div class="oh-state {% if settings.values.enableDaysList != false %}oh-days--enabled{% endif %}">
+        {% for item in data.values %}
+            <div class="oh-current">
+                {% if item.opened == false and item.minutesLeft == false and currentTime <= item.timeStart %}
+                       {{ closed }} {{ openAt }} {{ item.timeStart }} {{ time }}
+                    {% elseif item.opened == true and item.minutesLeft == false %}
+                        {% if item.lunchStart >= currentTime and item.lunchMinutesLeft == false %}
+                          {{ opened }} {{ closesAt }} {{ item.lunchStart }} {{ time }}
+                        {% elseif item.lunchMinutesLeft == true and item.toLunchStart <= 30 and currentTime <= item.lunchStart %}
+                           {{ opened }} {{ closesIn }} {{ item.toLunchStart }} {{ minutes }}
+                        {% elseif item.lunchMinutesLeft == true and item.toLunchEnd <= 30 and currentTime <= item.lunchEnd %}
+                            {{ closed }} {{ openIn }} {{ item.toLunchEnd }} {{ minutes }}
+                        {% elseif currentTime >= item.lunchStart and currentTime <= item.lunchEnd %}
+                            {{ closed }} {{ openAt }} {{ item.lunchEnd }} {{ time }}
+                        {% else %}
+                            {{ opened }} {{ closesAt }} {{ item.timeEnd }} {{ time }}
+                        {% endif %}
+                    {% elseif item.opened == true and item.minutesLeft == true %}
+                        {{ opened }} {{ closesIn }} {{ item.toEnd }} {{ minutes }}
+                    {% elseif item.opened == false and item.minutesLeft == true %}
+                        {{ closed }} {{ openIn }} {{ item.toStart }} {{ minutes }}
+                    {% else %}
+                        <span class="oh--current-closed">{{ "PLUGIN_OPENING_HOURS.GENERAL.CLOSED"|t }}</span>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+
+    {% if settings.values.enableDaysList != false or settings.values.enableDaysList != null %}
+        <div id="oh-container" class="oh-container">
+            <div class="oh-mouseleave"></div>
+            {% for items in allDays.values %}
+
+        {# ==================================================================== #}
+                {% if grav.language.getActive == 'en' %}
+                    {% set daysStart  = items.daysStart|date('h:i A') %}
+                    {% set daysEnd  = items.daysEnd|date('h:i A') %}
+                    {% set lunchStart  = items.lunchStart|date('h:i A') %}
+                    {% set lunchEnd  = items.lunchEnd|date('h:i A') %}
+                {% else %}
+                    {% set daysStart  = items.daysStart|date('H:i') %}
+                    {% set daysEnd  = items.daysEnd|date('H:i') %}
+                    {% set lunchStart  = items.lunchStart|date('H:i') %}
+                    {% set lunchEnd  = items.lunchEnd|date('H:i') %}
+                {% endif %}
+        {# ==================================================================== #}
+
+                <div class="oh-content oh-content--main oh-content--day">
+                    <p class="oh-content--dayname">
+                        {{ items.days }}:
+                    </p>
+                    {% if daysStart and daysEnd and lunchStart == null and lunchEnd == null %}
+
+                        <div class="oh-content oh-content--time">
+                            <p class="oh-content--text oh-content--opening">
+                                {{ daysStart }} {{ time }}
+                            </p>
+                            <span class="oh-content--spacer">-</span>
+                            <p class="oh-content--text oh-content--closing">
+                                {{ daysEnd }} {{ time }}
+                            </p>
+                        </div>
+                        {% elseif lunchStart != null and lunchEnd != null %}
+                            <div class="oh-content oh-content--lunch">
+                                <div class="oh-content--lunchtime">
+                                    <p class="oh-content--text oh-content--opening">
+                                        {{ daysStart }} {{ time }}
+                                    </p>
+                                    <span class="oh-content--spacer">-</span>
+                                    <p class="oh-content--text oh-content--closing">
+                                        {{ lunchStart }} {{ time }}
+                                    </p>
+                                </div>
+                                <div class="oh-content--lunchtime">
+                                    <p class="oh-content--text oh-content--opening">
+                                        {{ lunchEnd }} {{ time }}
+                                    </p>
+                                    <span class="oh-content--spacer">-</span>
+                                    <p class="oh-content--text oh-content--closing">
+                                        {{ daysEnd }} {{ time }}
+                                    </p>
+                                </div>
+                            </div>
+                        {% else %}
+                        <div class="oh-content oh-content--time">
+                            <p class="oh-content--text oh-content--closed">
+                                {{ "PLUGIN_OPENING_HOURS.GENERAL.CLOSED"|t }}
+                            </p>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+    </div>
+    {% endif %}
+</div>

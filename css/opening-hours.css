@@ -1,0 +1,227 @@
+
+:root {
+    --red:#e03838;
+    --green:#35db48;
+    --white: #fff;
+    --dark: #3b3e52;
+    --borderColor: #dde2eb;
+    --weight-bold:700;
+    --shadow: 0px 21px 26px -14px rgba(0,0,0,0.33);
+    --bezier: .47,.61,.21,.96;
+}
+
+.oh-wrapper {
+ position: relative;
+    z-index: 9999;
+}
+
+
+
+.oh-current,
+.oh-content,
+.oh-content--text {
+    margin: 0;
+}
+
+.oh-current--opened {
+    color:var(--green);
+    font-weight: var(--weight-bold);
+    padding-right: .25rem;
+}
+
+.oh-current--closed {
+    color:var(--red);
+    font-weight: var(--weight-bold);
+    padding-right: .25rem;
+}
+
+.oh-content--closed,
+.oh--list-closed {
+    font-weight: var(--weight-bold);
+}
+
+.oh-days--enabled .oh-current::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    right: 1.75rem;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 8px solid var(--dark);
+    transition: all .25s cubic-bezier(var(--bezier));
+}
+
+.oh-current.active::after {
+    transform: rotate(180deg);
+    transition: all .25s cubic-bezier(var(--bezier));
+}
+
+
+/*---------------
+     Daylist
+---------------*/
+.oh-container {
+    position: absolute;
+    left: 1rem;
+    padding: 0 .75rem;
+    width: 320px;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    border-radius: 15px;
+    transform: translateY(calc(-100% - 20rem)) scale(0);
+}
+
+.oh-state {
+    width: 320px;
+    padding: 1rem 0 0 1rem;
+}
+
+.oh-current {
+    display: flex;
+    align-items: center;
+}
+
+.oh-days--enabled {
+    position: relative;
+    cursor: pointer;
+}
+
+.oh-mouseleave {
+    position: absolute;
+    top: -2rem;
+    width: calc(100% + 2rem);
+    height: 100%;
+    left: -2rem;
+    z-index: -1;
+}
+
+.shown {
+    position: relative;
+    animation: fadeIn .35s cubic-bezier(var(--bezier)) normal forwards;
+    z-index: 10;
+}
+
+.shown .oh-mouseleave {
+    z-index: 2;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(calc(-100% - 20rem)) scale(0);
+    }
+    75% {
+        opacity: 1;
+        transform: translateY(10px) scale(1.1);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+.hidden {
+    animation: fadeOut .35s cubic-bezier(var(--bezier)) normal forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    25% {
+        opacity: 1;
+        transform: translateY(10px) scale(1.1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(calc(-100% - 20rem)) scale(0);
+    }
+}
+
+.oh-content {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    z-index: 3;
+    opacity: 0;
+}
+
+.textAnimateIn,
+.textAnimateIn .oh-content--time,
+.textAnimateIn .oh-content--lunch {
+    animation: textFadeIn .15s cubic-bezier(var(--bezier)) normal forwards;
+    transform-origin: center left;
+}
+
+@keyframes textFadeIn {
+    from {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+    to {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+}
+
+.textAnimateOut,
+.textAnimateOut .oh-content--time,
+.textAnimateOut .oh-content--lunch {
+    animation: textFadeOut .15s cubic-bezier(var(--bezier)) normal forwards;
+    transform-origin: center left;
+}
+
+@keyframes textFadeOut {
+    from {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+    to {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+}
+
+.oh-content--day {
+    border-bottom: 1px solid var(--borderColor);
+    padding: .5rem 0;
+}
+
+.oh-content--day:last-of-type {
+    border-bottom: 0;
+}
+
+.oh-content--closing,
+.oh-content--opening {
+    max-width: 75px;
+    min-width: 75px;
+}
+
+.oh-content--closing {
+    text-align: end;
+}
+
+.oh-content--lunch {
+    flex-wrap: wrap;
+    padding-left: 1rem;
+    width: 100%;
+    max-width: 190px;
+}
+
+.oh-content--dayname {
+    margin: 0;
+}
+
+.oh-content--time {
+    padding-left: 1rem;
+    width: 100%;
+    max-width: 190px;
+}
+
+.oh-content--lunchtime {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+

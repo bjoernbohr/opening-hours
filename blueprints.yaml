@@ -1,0 +1,253 @@
+name: Opening Hours
+version: 0.1.0
+description: Insert opening Hours to your Site
+icon: plug
+author:
+  name: Bjoern Bohr
+  email: bjoern.bohr@gmail.com
+homepage: https://github.com/bit-it/grav-facebook-feed
+keywords: grav, plugin, facebook, feed, etc
+bugs: https://github.com/bit-it/grav-facebook-feed/issues
+docs: https://github.com/bit-it/grav-facebook-feed/README.md
+license: MIT
+
+
+form:
+  validation: strict
+  fields:
+    basics:
+      type: section
+      title: Initial Setup
+      underline: false
+
+    enabled:
+      type: toggle
+      label: Plugin status
+      highlight: 1
+      default: 0
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    settings.enableCSS:
+      type: toggle
+      label: PLUGIN_OPENING_HOURS.GENERAL.CSS_ENABLE
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    advanced:
+      type: section
+      title: PLUGIN_OPENING_HOURS.GENERAL.DAYS_HEADER
+      underline: false
+
+    settings.daysList:
+      type: toggle
+      label: PLUGIN_OPENING_HOURS.GENERAL.DAYSLIST_ENABLE
+      help: PLUGIN_OPENING_HOURS.GENERAL.DAYSLIST_INFO
+      highlight: 1
+      default: 0
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    week.fieldset:
+      type: fieldset
+      title: PLUGIN_OPENING_HOURS.GENERAL.DAYS_FIELDSET_HEADER
+      icon: calendar
+      collapsed: true
+      collapsible: true
+      fields:
+
+        info:
+          type: fieldset
+          title: PLUGIN_OPENING_HOURS.GENERAL.DAYS_FIELDSET_INFO
+          icon: info-circle
+          collapsed: false
+          collapsible: false
+
+        mon.section:
+          type: section
+          title: PLUGIN_OPENING_HOURS.DAYS.MONDAY
+          underline: true
+          fields:
+            mon.hidden:
+              type: hidden
+              default: monday
+            mon.start:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.OPENS_AT
+              size: small
+            mon.end:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.CLOSES_IN
+              size: small
+            mon.lunchStart:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.LUNCH_START
+              size: small
+            mon.lunchEnd:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.LUNCH_END
+              size: small
+
+
+        tue.section:
+          type: section
+          title: PLUGIN_OPENING_HOURS.DAYS.TUESDAY
+          underline: true
+          fields:
+            tue.hidden:
+              type: hidden
+              default: tuesday
+            tue.start:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.OPENS_AT
+              size: small
+            tue.end:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.CLOSES_AT
+              size: small
+            tue.lunchStart:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.LUNCH_START
+              size: small
+            tue.lunchEnd:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.LUNCH_END
+              size: small
+
+
+        wed.section:
+          type: section
+          title: PLUGIN_OPENING_HOURS.DAYS.WEDNESDAY
+          underline: true
+          fields:
+            wed.hidden:
+              type: hidden
+              default: wednesday
+            wed.start:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.OPENS_AT
+              size: small
+            wed.end:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.CLOSES_AT
+              size: small
+            wed.lunchStart:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.LUNCH_START
+              size: small
+            wed.lunchEnd:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.LUNCH_END
+              size: small
+
+
+        thu.section:
+          type: section
+          title: PLUGIN_OPENING_HOURS.DAYS.THURSDAY
+          underline: true
+          fields:
+            thu.hidden:
+              type: hidden
+              default: thursday
+            thu.start:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.OPENS_AT
+              size: small
+            thu.end:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.CLOSES_AT
+              size: small
+            thu.lunchStart:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.LUNCH_START
+              size: small
+            thu.lunchEnd:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.LUNCH_END
+              size: small
+
+        fri.section:
+          type: section
+          title: PLUGIN_OPENING_HOURS.DAYS.FRIDAY
+          underline: true
+          fields:
+            fri.hidden:
+              type: hidden
+              default: friday
+            fri.start:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.OPENS_AT
+              size: small
+            fri.end:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.CLOSES_AT
+              size: small
+            fri.lunchStart:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.LUNCH_START
+              size: small
+            fri.lunchEnd:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.LUNCH_END
+              size: small
+
+        sat.section:
+          type: section
+          title: PLUGIN_OPENING_HOURS.DAYS.SATURDAY
+          underline: true
+          fields:
+            sat.hidden:
+              type: hidden
+              default: saturday
+            sat.start:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.OPENS_AT
+              size: small
+            sat.end:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.CLOSES_AT
+              size: small
+            sat.lunchStart:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.LUNCH_START
+              size: small
+            sat.lunchEnd:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.LUNCH_END
+              size: small
+
+        sun.section:
+          type: section
+          title: PLUGIN_OPENING_HOURS.DAYS.SUNDAY
+          underline: true
+          fields:
+            sun.hidden:
+              type: hidden
+              default: sunday
+            sun.start:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.OPENS_AT
+              size: small
+            sun.end:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.CLOSES_AT
+              size: small
+            sun.lunchStart:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.LUNCH_START
+              size: small
+            sun.lunchEnd:
+              type: time
+              label: PLUGIN_OPENING_HOURS.GENERAL.LUNCH_END
+              size: small
