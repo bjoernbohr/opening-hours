@@ -1,14 +1,14 @@
 name: Opening Hours
 version: 0.1.0
-description: Insert opening Hours to your Site
+description: Insert business Hours to your Site
 icon: plug
 author:
   name: Bjoern Bohr
   email: bjoern.bohr@gmail.com
-homepage: https://github.com/bit-it/grav-facebook-feed
-keywords: grav, plugin, facebook, feed, etc
-bugs: https://github.com/bit-it/grav-facebook-feed/issues
-docs: https://github.com/bit-it/grav-facebook-feed/README.md
+homepage: https://github.com/bjoernbohr/opening-hours
+keywords: grav, gravcms, grav plugin, plugin, shopping hours, hours, business hours, opening hours, etc
+bugs: https://github.com/bjoernbohr/opening-hours/issues
+docs: https://github.com/bjoernbohr/opening-hours/blob/master/README.md
 license: MIT
 
 
