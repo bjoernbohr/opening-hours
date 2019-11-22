@@ -42,10 +42,9 @@
 
 .oh-days--enabled .oh-current::after {
     content: '';
-    position: absolute;
     width: 0;
     height: 0;
-    right: 1.75rem;
+    margin-left: .25rem;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
     border-top: 8px solid var(--dark);
