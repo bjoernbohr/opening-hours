@@ -44,7 +44,7 @@ Note that if you use the Admin Plugin, a file with your configuration named open
 
 Simple to Use opening hours Plugin for your Site.
 
-Add the **{{ opening_hours() dicke ärsche}}** function anywhere to your site
+Add the **{{ opening_hours() }}** function anywhere to your site
 
 You will have to setup the Plugin or save at least once, otherwise no inital yaml file will be created and the Plugin wont show up 
 
