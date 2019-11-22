@@ -44,6 +44,10 @@ Note that if you use the Admin Plugin, a file with your configuration named open
 
 Simple to Use opening hours Plugin for your Site.
 
+Add the **{{ opening_hours() }}** function anywhere to your site
+
+You will have to setup the Plugin or save at least once, otherwise no inital yaml file will be created and the Plugin wont show up 
+
 If you only want to show the current day, disable the **"listview-days"**
 If you want to use your own styling you can disable the css by clicking the siable button at **"Disable Plugin CSS"**
 

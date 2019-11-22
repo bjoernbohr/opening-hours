@@ -94,6 +94,7 @@ class OpeningHoursPlugin extends Plugin {
         $days = $this->getAllDays()['daysArray'];
 
         //Get current day, hours and translate it
+
         foreach ($days as $day) {
             $dayShortcode = substr($day, 0, 3);
 

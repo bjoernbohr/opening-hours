@@ -44,7 +44,7 @@
                     {% elseif item.opened == false and item.minutesLeft == true %}
                         {{ closed }} {{ openIn }} {{ item.toStart }} {{ minutes }}
                     {% else %}
-                        <span class="oh--current-closed">{{ "PLUGIN_OPENING_HOURS.GENERAL.CLOSED"|t }}</span>
+                        <span class="oh-current--closed">{{ "PLUGIN_OPENING_HOURS.GENERAL.CLOSED"|t }}</span>
                 {% endif %}
             </div>
         {% endfor %}
