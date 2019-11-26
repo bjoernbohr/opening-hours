@@ -1,0 +1,47 @@
+{% if grav.language.getLanguage == 'en' %}
+    {% set currentTime = 'now'|date('h:i A') %}
+    {% set time = "" %}
+{% else %}
+    {% set currentTime = 'now'|date('H:i') %}
+    {% set time = "PLUGIN_OPENING_HOURS.GENERAL.TIME"|t %}
+{% endif %}
+
+
+{% set opened %}
+    <span class="oh-current--opened">{{ "PLUGIN_OPENING_HOURS.GENERAL.OPENED"|t }},</span>
+{% endset %}
+{% set closed %}
+    <span class="oh-current--closed">{{ "PLUGIN_OPENING_HOURS.GENERAL.CLOSED"|t }},</span>
+{% endset %}
+
+
+{% set openAt = "PLUGIN_OPENING_HOURS.GENERAL.OPENS_AT"|t  %}
+{% set openIn = "PLUGIN_OPENING_HOURS.GENERAL.OPENS_IN"|t  %}
+{% set closesAt = "PLUGIN_OPENING_HOURS.GENERAL.CLOSES_AT"|t %}
+{% set closesIn = "PLUGIN_OPENING_HOURS.GENERAL.CLOSES_IN"|t %}
+{% set minutes = "PLUGIN_OPENING_HOURS.GENERAL.MINUTES"|t %}
+
+{# ======================================================== #}
+
+    {% for items in allDays.values %}
+        {# ==================================================================== #}
+        {% if grav.language.getLanguage == 'en' %}
+            {% set daysStart  = items.daysStart|date('h:i A') %}
+            {% set daysEnd  = items.daysEnd|date('h:i A') %}
+            {% set lunchStart  = items.lunchStart|date('h:i A') %}
+            {% set lunchEnd  = items.lunchEnd|date('h:i A') %}
+        {% else %}
+            {% set daysStart  = items.daysStart|date('H:i') %}
+            {% set daysEnd  = items.daysEnd|date('H:i') %}
+            {% set lunchStart  = items.lunchStart|date('H:i') %}
+            {% set lunchEnd  = items.lunchEnd|date('H:i') %}
+        {% endif %}
+        {# ==================================================================== #}
+
+        {% if items.daysStart and items.daysEnd and items.lunchStart == null and items.lunchEnd == null %}
+                {{ substr(items.days,0,2) }}: {{ daysStart }}  &ndash; {{ daysEnd }} {{ time }}<br>
+        {% elseif items.lunchStart != null and items.lunchEnd != null %}
+                {{ substr(items.days,0,2) }}: {{ daysStart }}  &ndash; {{ lunchStart }}  & {{ lunchEnd }}  &ndash; {{ daysEnd }} {{ time }}<br>
+        {% endif %}
+        
+    {% endfor %}

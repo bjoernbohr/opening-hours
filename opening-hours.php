@@ -23,6 +23,8 @@ class OpeningHoursPlugin extends Plugin {
      */
 
     private $template_post_html = 'partials/opening-hours.html.twig';
+    private $template_post_table_html = 'partials/opening-hours-table.html.twig';
+    private $template_post_text_html = 'partials/opening-hours-text.html.twig';
 
     // Initialize configuration.
     public function onPluginsInitialized() {
@@ -34,12 +36,14 @@ class OpeningHoursPlugin extends Plugin {
     public function onTwigInitialized() {
 
 
-        $this->grav['twig']->twig->addFunction(new \Twig_SimpleFunction('opening_hours', [$this, 'getHours']));
+        $this->grav['twig']->twig->addFunction(new \Twig_SimpleFunction('opening_hours', [$this, 'getHoursFancy']));
+        $this->grav['twig']->twig->addFunction(new \Twig_SimpleFunction('opening_hours_table', [$this, 'getHoursTable']));
+        $this->grav['twig']->twig->addFunction(new \Twig_SimpleFunction('opening_hours_text', [$this, 'getHoursText']));
 
-        if  ($this->settings()['values']['enableDaysList'] == true) {
+        if ($this->settings()['values']['enableDaysList'] == true) {
             $this->grav['assets']->addJs('plugin://opening-hours/js/opening-hours.js', ['group' => 'bottom']);
         }
-        if ($this->settings()['values']['disableCSS'] == true || $this->settings()['values']['disableCSS'] == null) {
+        if ($this->settings()['values']['enableCSS'] == true ) {
             $this->grav['assets']->add('plugin://opening-hours/css/opening-hours.css');
         }
     }
@@ -53,6 +57,9 @@ class OpeningHoursPlugin extends Plugin {
 
 
     public function getLangTime() {
+        setlocale(LC_TIME, 'C');
+        $daystring_en = strtolower(strftime("%A"));
+
         $getSystemLang = $this->config->get('site.default_lang');
         setlocale(LC_TIME, $getSystemLang);
 
@@ -67,7 +74,8 @@ class OpeningHoursPlugin extends Plugin {
         return array(
             'day' => $currentDay,
             'time' => $currentTime,
-            'systemLang' => $getSystemLang
+            'systemLang' => $getSystemLang,
+            'day_en' => $daystring_en
         );
     }
 
@@ -75,30 +83,48 @@ class OpeningHoursPlugin extends Plugin {
     public function settings() {
 
         $enableDaysList = $this->config->get('plugins.opening-hours.settings.daysList');
-        $disableCSS = $this->config->get('plugins.opening-hours.settings.enableCSS');
+        $enableCSS = $this->config->get('plugins.opening-hours.settings.enableCSS');
 
         $settings['values'] = [
             'enableDaysList' => $enableDaysList,
-            'disableCSS' => $disableCSS
+            'enableCSS' => $enableCSS
         ];
         return $settings;
     }
 
+    public function getHoursTable()
+    {
+        return $this->getHours('table');
+    }
 
-    public function getHours() {
+    public function getHoursText()
+    {
+        return $this->getHours('text');
+    }
+
+    public function getHoursFancy()
+    {
+        return $this->getHours('fancy');
+    }
+
+    public function getHours($mode = 'fancy') {
 
         $currentDay = $this->getLangTime()['day'];
+        $currentDayEn = $this->getLangTime()['day_en'];
         $currentTime = $this->getLangTime()['time'];
         $getSystemLang = $this->getLangTime()['systemLang'];
 
         $days = $this->getAllDays()['daysArray'];
 
+
+        $values = array();
+
         //Get current day, hours and translate it
 
         foreach ($days as $day) {
-            $dayShortcode = substr($day, 0, 3);
 
-            if ($currentDay === $day) {
+            $dayShortcode = substr($day, 0, 3);
+            if ($currentDayEn === $day) {
                 $dayTranslation = $this->grav['language']->translate(['PLUGIN_OPENING_HOURS.DAYS.' . strtoupper($day)]);
 
                 if($getSystemLang == 'en' || $getSystemLang === 'en_US') {
@@ -193,13 +219,29 @@ class OpeningHoursPlugin extends Plugin {
                 ];
             }
         }
-
-        $output = $this->grav['twig']->twig()->render($this->template_post_html,
-            array(
-                'data' => $values,
-                'allDays' => $this->getAllDays()['allDays'],
-                'settings' => $this->settings(),
-        ));
+        if($mode == 'fancy'){
+            $output = $this->grav['twig']->twig()->render($this->template_post_html,
+                array(
+                    'data' => $values,
+                    // 'data' => ['bernd','klaus'],
+                    'allDays' => $this->getAllDays()['allDays'],
+                    'settings' => $this->settings(),
+            ));
+        }elseif($mode == 'table'){
+            $output = $this->grav['twig']->twig()->render($this->template_post_table_html,
+                array(
+                    'data' => $values,
+                    'allDays' => $this->getAllDays()['allDays'],
+                    'settings' => $this->settings(),
+            ));
+        }elseif($mode == 'text'){
+            $output = $this->grav['twig']->twig()->render($this->template_post_text_html,
+                array(
+                    'data' => $values,
+                    'allDays' => $this->getAllDays()['allDays'],
+                    'settings' => $this->settings(),
+            ));
+        }
 
         return $output;
 

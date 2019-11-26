@@ -49,7 +49,12 @@ Add the **{{ opening_hours() }}** function anywhere to your site
 You will have to setup the Plugin or save at least once, otherwise no inital yaml file will be created and the Plugin wont show up 
 
 If you only want to show the current day, disable the **"listview-days"**
-If you want to use your own styling you can disable the css by clicking the siable button at **"Disable Plugin CSS"**
+If you want to use your own styling you can disable the css by clicking the Disable button at **"Enable Plugin CSS"**
+
+Additionally to the default Styling (with the opening hours animated popup at mouseover) there are two other Styles available:
+
+- **{{ opening_hours_table() }}** will display a plain HTML Table with one row for each day
+- **{{ opening_hours_text() }}** will display a text-only output, one line for each day
 
 Note that in order to get the **right timeformat** you will have to set your **default language** at **configuration/site/default language**
 Secondly to get the **right time** you will have to set your **timezone** under **configuration/system/content/timezone**.
