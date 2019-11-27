@@ -1,8 +1,9 @@
-{% if grav.language.getActive == 'en' %}
+{% if grav.language.getLanguage == 'en' %}
     {% set currentTime = 'now'|date('h:i A') %}
+    {% set time = "" %}
 {% else %}
-    {% set currentTime = 'now'|date('H:i') %}
     {% set time = "PLUGIN_OPENING_HOURS.GENERAL.TIME"|t %}
+    {% set currentTime = 'now'|date('H:i') %}
 {% endif %}
 
 
@@ -21,6 +22,9 @@
 {% set minutes = "PLUGIN_OPENING_HOURS.GENERAL.MINUTES"|t %}
 
 {# ======================================================== #}
+
+{{ dump(data) }}
+
 <div class="oh-wrapper">
     <div class="oh-state {% if settings.values.enableDaysList != false %}oh-days--enabled{% endif %}">
         {% for item in data.values %}
@@ -57,7 +61,7 @@
             {% for items in allDays.values %}
 
         {# ==================================================================== #}
-                {% if grav.language.getActive == 'en' %}
+                {% if grav.language.getLanguage == 'en' %}
                     {% set daysStart  = items.daysStart|date('h:i A') %}
                     {% set daysEnd  = items.daysEnd|date('h:i A') %}
                     {% set lunchStart  = items.lunchStart|date('h:i A') %}
@@ -74,7 +78,7 @@
                     <p class="oh-content--dayname">
                         {{ items.days }}:
                     </p>
-                    {% if daysStart and daysEnd and lunchStart == null and lunchEnd == null %}
+                    {% if items.daysStart and items.daysEnd and items.lunchStart == null and items.lunchEnd == null %}
 
                         <div class="oh-content oh-content--time">
                             <p class="oh-content--text oh-content--opening">
@@ -85,7 +89,7 @@
                                 {{ daysEnd }} {{ time }}
                             </p>
                         </div>
-                        {% elseif lunchStart != null and lunchEnd != null %}
+                        {% elseif items.lunchStart != null and items.lunchEnd != null %}
                             <div class="oh-content oh-content--lunch">
                                 <div class="oh-content--lunchtime">
                                     <p class="oh-content--text oh-content--opening">
