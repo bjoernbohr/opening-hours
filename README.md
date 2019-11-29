@@ -61,6 +61,10 @@ Secondly to get the **right time** you will have to set your **timezone** under 
 For the **translation** to work properly you will have to set the **supported language** at **configuration/system/languages/supported**. 
 **Don't disable** the **Include default language** property. Otherwise the translation will not work properly.
 
+## Credits
+You want to be anle todo more then just sdding business hours and lunch breaks? 
+Check out [quando](https://github.com/hughbris/grav-plugin-quando)
+
 ## To Do
 
 - [ ] If desired translate the Plugin to other Languages
